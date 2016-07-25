@@ -29,6 +29,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
@@ -248,10 +249,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
 
-        } finally {
+        } catch (SQLiteException e){
+			e.printStackTrace();
+            Log.e(e.getMessage());
+            //TODO log to crashlytics ?
+		} finally{
             IOUtils.closeQuietly(buffer);
             IOUtils.closeQuietly(reader);
-
         }
 	}
 }
